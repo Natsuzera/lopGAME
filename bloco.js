@@ -30,6 +30,7 @@ class blocoManager {
         this.blocoAtual = null;
         this.sequence = [];
         this.inicializacao = false;
+        this.movements = [];
     }
 
     addbloco(x, y, w, h, text) {
@@ -86,10 +87,11 @@ class blocoManager {
         }
         this.blocoAtual = null;
         this.sequence = [];
+        this.movements = [];
     }
 
     getMovementSequence(){
-        let movements = [];
+        this.movements = [];
         let forwardCount = 0;
 
         for(let action of this.sequence){
@@ -97,19 +99,19 @@ class blocoManager {
                 forwardCount++;
             } else {
                 if(forwardCount > 0){
-                    movements.push({type: "move", steps: forwardCount});
+                    this.movements.push({type: "move", steps: forwardCount});
                     forwardCount = 0;
                 }
-                movements.push({type: "rotate", direction: action === "Rot 90h" ? "clockwise" : "counterclockwise"});
+                this.movements.push({type: "rotate", direction: action === "Rot 90h" ? "clockwise" : "counterclockwise"});
             }
 
         }
 
         if(forwardCount > 0){
-            movements.push({type: "move", steps: forwardCount});
+            this.movements.push({type: "move", steps: forwardCount});
         }
 
-        return movements;
+        return this.movements;
     }
     
 }

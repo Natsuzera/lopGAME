@@ -15,7 +15,7 @@ class Robot {
         image(this.image, this.x, this.y, 105, 80);
     }
 
-    move() {
+    move(reset) {
         if ((this.isMoving && this.x <= 1440 && this.x <= this.targetPosition) && this.sentido == 0) {
             this.x += this.speed;
         } else if((this.isMoving && this.x >= 540 && this.x >= this.targetPosition) && (this.sentido == 180 || this.sentido == -180)) {
@@ -24,6 +24,11 @@ class Robot {
             this.y += this.speed;
         } else if((this.isMoving && this.y >= 0 && this.y >= this.targetPosition) && (this.sentido == 270 || this.sentido == -270)) {
             this.y -= this.speed;
+        } else  if(reset == true){
+            this.x = 575;
+            this.y = 25;
+            this.sentido = 0;
+            this.isMoving = false;
         } else {
             this.isMoving = false;
         }

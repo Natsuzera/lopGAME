@@ -6,6 +6,7 @@ let tela_height = 900;
 habilitarMov = false;
 let bau;
 
+
 function preload() {
     robotImage = loadImage('images/robo.png');
     bau = loadImage('images/bau.png');
@@ -25,13 +26,17 @@ function setup() {
     blocos.addbloco(20, 130, 150, 80, "Rot 90ah");
 
     blocos.concluirInicializacao();
+   
+    //posição aleatória do bau
+    eixoX = Math.floor((Math.random() * 12)+1)*75 + 540 + 35;
+    eixoY = Math.floor((Math.random() * 12)+1)*75 + 35;
 }
 
 function draw() {
     background(200);
     drawGrid();
     robot.display();
-    image(bau, 1025, 485, 75, 70);
+    image(bau, eixoX, eixoY, 75, 70);
     blocos.displayblocos();
     displayUI();
 
@@ -40,8 +45,10 @@ function draw() {
     }
 
     if (robot.isMoving) {
-        robot.move();
+        robot.move(false);
     }
+
+    
 
 }
 
@@ -87,6 +94,7 @@ function ButtonClicks() {
     if (isClickInside(50, 830, 100, 50)) {
         blocos.clear();
         blocoPadrao();
+        robot.move(true);
     }
     //verifica se o click foi dentro do botão executar
     if (isClickInside(350, 830, 100, 50)) {
@@ -129,4 +137,6 @@ function executeMovementSequence(sequenciaDeMovimentos) {
             executeMovementSequence(sequenciaDeMovimentos);
         }, 500); // talvez necessario ajustar o delay?
     }
+    console.log("Chegou aqui?");
+
 }
