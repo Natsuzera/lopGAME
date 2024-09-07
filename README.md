@@ -1,0 +1,1 @@
+Por hora, os movimentos são executados por ordem que foi colocado os blocos, se primeiro você colocou um bloco de "Forward" então primeiro ele vai avançar, a ordem que você colocar os blocos, é a que vai ser a sequencia do movimento, não esta por ordem de cima para baixo ou coisa do tipo, e sim a ordem do qual colocou primeiro.
