@@ -1,5 +1,9 @@
 class Robot {
+    #x;
+    #y;
     constructor(x, y, size) {
+        this.#x = x;
+        this.#y = y;
         this.x = x;
         this.y = y;
         this.size = size;
@@ -16,17 +20,17 @@ class Robot {
     }
 
     move(reset) {
-        if ((this.isMoving && this.x <= 1440 && this.x <= this.targetPosition) && this.sentido == 0) {
+        if ((this.isMoving && this.x <= 1440-(this.size/2) && this.x <= this.targetPosition) && this.sentido == 0) {
             this.x += this.speed;
-        } else if((this.isMoving && this.x >= 540 && this.x >= this.targetPosition) && (this.sentido == 180 || this.sentido == -180)) {
+        } else if((this.isMoving && this.x >= 540+(this.size/2) && this.x >= this.targetPosition) && (this.sentido == 180 || this.sentido == -180)) {
             this.x -= this.speed;
-        } else if((this.isMoving && this.y <= 900 && this.y <= this.targetPosition) && (this.sentido == 90 || this.sentido == -90)) {
+        } else if((this.isMoving && this.y <= 900-(this.size/2) && this.y <= this.targetPosition) && (this.sentido == 90 || this.sentido == -270)) {
             this.y += this.speed;
-        } else if((this.isMoving && this.y >= 0 && this.y >= this.targetPosition) && (this.sentido == 270 || this.sentido == -270)) {
+        } else if((this.isMoving && this.y >= 0+(this.size/2) && this.y >= this.targetPosition) && (this.sentido == 270 || this.sentido == -90)) {
             this.y -= this.speed;
         } else  if(reset == true){
-            this.x = 575;
-            this.y = 25;
+            this.x = this.#x;
+            this.y = this.#y;
             this.sentido = 0;
             this.isMoving = false;
         } else {
@@ -50,32 +54,34 @@ class Robot {
 
     moverPara(blocoCount) {
         if(blocoCount > 0){
+            console.log(blocoCount);
             if(this.sentido == 0){
                 this.targetPosition = this.x + (blocoCount * this.size);
-            } else if (this.sentido == 90){
+            } else if (this.sentido == 90 || this.sentido == -270){
                 this.targetPosition = this.y + (blocoCount * this.size);
-            } else if (this.sentido == 180){
+            } else if (this.sentido == 180 || this.sentido == -180){
                 this.targetPosition = this.x - (blocoCount * this.size);
-            } else if (this.sentido == 270){
+            } else if (this.sentido == 270 || this.sentido == -90){
                 this.targetPosition = this.y - (blocoCount * this.size);
             }
             this.isMoving = true;
         } else {
             this.isMoving = false;
         }
-        
-        
-        
     }
 
     rotacionar(sentido) {
-        if((this.sentido == 270 && sentido=="clockwise" ) || (this.sentido == -270 && sentido=="counterclockwise")){
-            this.sentido = 0;
-        }
+
+        //lembrar que o plano cartesiano nesse caso é diferente do convencional, por isso a rotação é diferente
+        //o eixo y é invertido e o sentido horario é positivo
         if(sentido == "clockwise"){
             this.sentido += 90 ;
         } else if(sentido == "counterclockwise"){
             this.sentido -= 90;
         }
+        if(this.sentido == 360 || this.sentido == -360){
+            this.sentido = 0;
+        }
+        console.log(this.sentido);
     }
 }
