@@ -31,6 +31,8 @@ class blocoManager {
         this.sequence = [];
         this.inicializacao = false;
         this.movements = [];
+        this.novoX = 30;
+        this.novoY = 225;
     }
 
     addbloco(x, y, w, h, text) {
@@ -57,7 +59,6 @@ class blocoManager {
                 this.blocoAtual = tipo;
                 return true;
             }
-            
         }
         return false;
     }
@@ -73,7 +74,19 @@ class blocoManager {
 
     addblocoAtPosition(x, y) {
         if (y > 225 && x < 540 - 150 && this.blocoAtual) {
-            this.addbloco(x, y, 150, 80, this.blocoAtual);
+            // Encontra a posição Y do último bloco na sequência
+            if (this.sequence.length > 0) {
+                let ultimoBloco = this.blocos[this.sequence[this.sequence.length - 1]];
+                if (ultimoBloco.length > 0) {
+                    if(ultimoBloco[ultimoBloco.length - 1].y + 80 >= 750){
+                        this.novoX += 160;
+                        this.novoY = 225;
+                    } else {
+                        this.novoY = ultimoBloco[ultimoBloco.length - 1].y + 80; // 80 (altura do bloco) + 10 (espaço entre blocos)
+                    }
+                }
+            }
+            this.addbloco(this.novoX, this.novoY, 150, 80, this.blocoAtual);
         }
     }
 
@@ -88,6 +101,8 @@ class blocoManager {
         this.blocoAtual = null;
         this.sequence = [];
         this.movements = [];
+        this.novoX = 30;
+        this.novoY = 225;
     }
 
     getMovementSequence(){
